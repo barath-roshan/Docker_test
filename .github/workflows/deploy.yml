@@ -24,13 +24,13 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t atomcodex/aws-cicd:${{ github.sha }} .
-          docker tag atomcodex/aws-cicd:${{ github.sha }} atomcodex/aws-cicd:latest
+          docker build -t barathsr/docker_test:${{ github.sha }} .
+          docker tag barathsr/docker_test:${{ github.sha }} barathsr/docker_test:latest
 
       - name: Push Docker Images
         run: |
-          docker push atomcodex/aws-cicd:${{ github.sha }}
-          docker push atomcodex/aws-cicd:latest
+          docker push barathsr/docker_test:${{ github.sha }}
+          docker push barathsr/docker_test:latest
 
   deploy:
     needs: build-and-push
@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Pull Latest Docker Image
         run: |
-          sudo docker pull atomcodex/aws-cicd:latest
+          sudo docker pull barathsr/docker_test:latest
 
       - name: Stop Existing Container
         run: |
@@ -52,4 +52,4 @@ jobs:
             --name aws-cicd-container \
             -p 80:80 \
             --restart always \
-            atomcodex/aws-cicd:latest
+            barathsr/docker_test:latest
